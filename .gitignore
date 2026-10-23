@@ -25,3 +25,8 @@ dist-ssr
 
 # assets folder
 src/assets/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
