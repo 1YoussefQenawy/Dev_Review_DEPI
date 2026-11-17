@@ -1,0 +1,22 @@
+{
+  "name": "dev-review-backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "DevReview AI backend (AI analysis module by Member 5)",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.0",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.9.0"
+  }
+}
