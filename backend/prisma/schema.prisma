@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime  @default(now())
+  snippets     Snippet[]
+}
+
+model Snippet {
+  id        Int      @id @default(autoincrement())
+  title     String
+  language  String
+  code      String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reviews   Review[]
+}
+
+model Review {
+  id            Int            @id @default(autoincrement())
+  status        String
+  score         Int?
+  result        Json?
+  createdAt     DateTime       @default(now())
+  snippetId     Int
+  snippet       Snippet        @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+  documentation Documentation?
+}
+
+model Documentation {
+  id        Int     @id @default(autoincrement())
+  content   String?
+  testStubs String?
+  reviewId  Int     @unique
+  review    Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+}
