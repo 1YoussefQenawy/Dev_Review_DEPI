@@ -6,6 +6,10 @@ import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Main_page from './Components/main_page/Main_page';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import CodeUpload from './Components/CodeUpload/CodeUpload';
+import SnippetsList from './Components/SnippetsList/SnippetsList';
+import SnippetDetails from './Components/SnippetDetails/SnippetDetails';
 
 function App() {
   return (
@@ -16,9 +20,15 @@ function App() {
         <Route path="/main_page" element={<Main_page />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/upload" element={<CodeUpload />} />
+          <Route path="/snippets" element={<SnippetsList />} />
+          <Route path="/snippets/:id" element={<SnippetDetails />} />
+        </Route>
       </Routes>
-       <Footer />
+      <Footer />
     </>
   );
 }

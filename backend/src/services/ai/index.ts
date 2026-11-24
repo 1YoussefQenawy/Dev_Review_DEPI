@@ -24,6 +24,8 @@ export type { AiErrorCode } from './errors';
 export type { AnalyzeInput, AnalyzeResult } from './analyzer';
 export type { Review, Finding, CategoryKey } from './schema';
 export { reviewSchema, CATEGORY_KEYS } from './schema';
+export { toFrontendReview } from './frontendDto';
+export type { FrontendReview, ToFrontendOptions } from './frontendDto';
 
 const usage = new UsageTracker();
 let analyzer: CodeAnalyzer | undefined;

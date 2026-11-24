@@ -30,3 +30,5 @@ src/assets/
 .env
 .env.*
 !.env.example
+backend/ai.env
+.env
