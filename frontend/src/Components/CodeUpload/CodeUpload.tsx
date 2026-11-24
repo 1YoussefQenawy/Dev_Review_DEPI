@@ -139,7 +139,7 @@ export default function CodeUpload() {
               <label htmlFor="code" className="form-label">Code</label>
               <textarea
                 id="code"
-                className="form-control font-monospace"
+                className="form-control font-monospace code-editor-textarea"
                 rows={14}
                 spellCheck={false}
                 placeholder="Or paste your code here..."

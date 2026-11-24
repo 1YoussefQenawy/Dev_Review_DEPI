@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { snippetsApi } from "../../services/snippetsApi";
 import { ApiError } from "../../services/api";
 import ReviewPanel from "../AIReview/ReviewPanel";
+import { highlightCodeLine } from "../../utils/codeHighlighter";
 import type { Review, Snippet } from "../../types";
 
 function scoreClass(score: number | null) {
@@ -25,6 +26,7 @@ export default function SnippetDetails() {
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
+    let pollTimer: any;
 
     snippetsApi
       .get(id)
@@ -40,22 +42,34 @@ export default function SnippetDetails() {
         if (!cancelled) setLoading(false);
       });
 
-    snippetsApi
-      .getReview(id)
-      .then((data) => {
-        if (!cancelled) setReview(data);
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setReviewError(err instanceof ApiError ? err.message : "Review is not available");
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setReviewLoading(false);
-      });
+    let attempts = 0;
+    const fetchReview = () => {
+      snippetsApi
+        .getReview(id)
+        .then((data) => {
+          if (!cancelled) {
+            setReview(data);
+            setReviewLoading(false);
+            setReviewError("");
+          }
+        })
+        .catch((err) => {
+          if (cancelled) return;
+          if (err?.message?.includes("Review not ready yet") && attempts < 150) {
+            attempts++;
+            pollTimer = setTimeout(fetchReview, 2500);
+          } else {
+            setReviewError(err instanceof ApiError ? err.message : "Review is not available");
+            setReviewLoading(false);
+          }
+        });
+    };
+
+    fetchReview();
 
     return () => {
       cancelled = true;
+      if (pollTimer) clearTimeout(pollTimer);
     };
   }, [id]);
 
@@ -109,26 +123,43 @@ export default function SnippetDetails() {
 
         <section className="mb-4">
           <h2 className="h4 mb-3">Code</h2>
-          <pre
-            className="p-3 rounded-3 text-white mb-0 cards-sidebar"
-            style={{ overflowX: "auto", maxHeight: 420 }}
-          >
-            {snippet.code.split("\n").map((line, i) => (
-              <div
-                key={i}
-                style={
-                  issueLines.has(i + 1)
-                    ? { backgroundColor: "rgba(245, 158, 11, 0.18)" }
-                    : undefined
-                }
-              >
-                <span className="text-secondary me-3 user-select-none">
-                  {String(i + 1).padStart(3, " ")}
-                </span>
-                {line || " "}
+          <div className="vscode-window rounded-3 overflow-hidden shadow-lg border border-secondary border-opacity-25">
+            <div className="vscode-header d-flex align-items-center justify-content-between px-3 py-2">
+              <div className="d-flex align-items-center gap-2">
+                <span className="vscode-dot vscode-dot-red"></span>
+                <span className="vscode-dot vscode-dot-yellow"></span>
+                <span className="vscode-dot vscode-dot-green"></span>
+                <span className="vscode-tab ms-2">{snippet.title}</span>
               </div>
-            ))}
-          </pre>
+              <span className="vscode-lang-badge text-secondary small font-monospace">
+                {snippet.language}
+              </span>
+            </div>
+            <pre
+              className="p-3 mb-0 vscode-code-body"
+              style={{ overflowX: "auto", maxHeight: 440 }}
+            >
+              {snippet.code.split("\n").map((line, i) => (
+                <div
+                  key={i}
+                  style={
+                    issueLines.has(i + 1)
+                      ? {
+                          backgroundColor: "rgba(245, 158, 11, 0.18)",
+                          borderLeft: "3px solid #F59E0B",
+                        }
+                      : { borderLeft: "3px solid transparent" }
+                  }
+                  className="vscode-code-line d-flex"
+                >
+                  <span className="vscode-line-num me-3 user-select-none">
+                    {String(i + 1).padStart(3, " ")}
+                  </span>
+                  <span className="vscode-code-text">{highlightCodeLine(line)}</span>
+                </div>
+              ))}
+            </pre>
+          </div>
           {issueLines.size > 0 && (
             <small className="text-secondary">Highlighted lines have style issues.</small>
           )}

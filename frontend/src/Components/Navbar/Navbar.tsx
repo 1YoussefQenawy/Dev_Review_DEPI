@@ -11,13 +11,13 @@ const SunIcon = () => (
     <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
   </svg>
-)
+);
 
 const MoonIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
   </svg>
-)
+);
 
 export default function Navbar() {
   const { isAuthenticated, logout } = useAuth();
@@ -30,44 +30,54 @@ export default function Navbar() {
   };
 
   const toggleTheme = useCallback(() => {
-    setLight(v => {
+    setLight((v) => {
       const next = !v;
-      document.documentElement.classList.toggle('light-mode', next);
+      document.documentElement.classList.toggle("light-mode", next);
       return next;
     });
   }, []);
 
   return (
-    <BsNavbar expand="lg" variant="dark" className="p-4 action-button">
+    <BsNavbar expand="lg" className="app-navbar py-3 px-4">
       <Container>
-        <BsNavbar.Brand as={NavLink} to="/main_page" className="fw-bold">
+        <BsNavbar.Brand as={NavLink} to="/main_page" className="navbar-brand-styled fw-bold fs-4">
           DevReview AI
         </BsNavbar.Brand>
 
-        <BsNavbar.Toggle aria-controls="main-nav" />
+        <BsNavbar.Toggle aria-controls="main-nav" className="custom-navbar-toggler" />
 
         <BsNavbar.Collapse id="main-nav">
-          <Nav className="ms-auto align-items-center">
+          <Nav className="ms-auto align-items-center gap-1">
             {isAuthenticated ? (
               <>
-        <>
-  <Nav.Link as={NavLink} to="/dashboard">Dashboard</Nav.Link>
-  <Nav.Link as={NavLink} to="/upload">Upload</Nav.Link>
-  <Nav.Link as={NavLink} to="/snippets">Snippets</Nav.Link>
-  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
-</>
-      </>
+                <Nav.Link as={NavLink} to="/dashboard" className="nav-item-colored">
+                  Dashboard
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/upload" className="nav-item-colored">
+                  Upload
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/snippets" className="nav-item-colored">
+                  Snippets
+                </Nav.Link>
+                <Nav.Link onClick={handleLogout} className="nav-item-colored nav-logout">
+                  Logout
+                </Nav.Link>
+              </>
             ) : (
               <>
-                <Nav.Link as={NavLink} to="/login" className="nav-auth-link">Login</Nav.Link>
-                <Nav.Link as={NavLink} to="/register" className="nav-auth-link">Register</Nav.Link>
+                <Nav.Link as={NavLink} to="/login" className="nav-item-colored nav-auth-link">
+                  Login
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/register" className="nav-item-colored nav-auth-link">
+                  Register
+                </Nav.Link>
               </>
             )}
             <button
-              className="theme-toggle-nav"
+              className="theme-toggle-nav ms-2"
               onClick={toggleTheme}
               aria-label="Toggle light/dark mode"
-              title={light ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+              title={light ? "Switch to Dark Mode" : "Switch to Light Mode"}
             >
               {light ? <MoonIcon /> : <SunIcon />}
             </button>

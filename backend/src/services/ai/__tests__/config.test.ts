@@ -1,11 +1,11 @@
 import { loadAiConfig } from '../config';
 
 describe('loadAiConfig', () => {
-  it('defaults to the mock provider, 30s timeout, no repair retries', () => {
+  it('defaults to the mock provider, 300s timeout, no repair retries', () => {
     const c = loadAiConfig({});
     expect(c.provider).toBe('mock');
-    expect(c.timeoutMs).toBe(30_000);
-    expect(c.maxInputChars).toBe(20_000);
+    expect(c.timeoutMs).toBe(300_000);
+    expect(c.maxInputChars).toBe(100_000);
     expect(c.maxRepairAttempts).toBe(0);
   });
   it('reads a custom timeout from the environment', () => {

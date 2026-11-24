@@ -25,8 +25,106 @@
     color: #8B5CF6;
 }
 
-.Navbar {
-    background-color: #000000;
+/* ===== App Navbar — Matches Main Background, Solid Colored Brand & Links (No Gradients) ===== */
+.app-navbar {
+    background-color: #111318 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+html.light-mode .app-navbar {
+    background-color: #F8F9FC !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Brand text: DevReview AI (Solid Color) */
+.navbar-brand-styled {
+    color: #8B5CF6 !important;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-decoration: none !important;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar-brand-styled:hover {
+    color: #A78BFA !important;
+    opacity: 0.95;
+}
+
+html.light-mode .navbar-brand-styled {
+    color: #0D9488 !important;
+}
+
+html.light-mode .navbar-brand-styled:hover {
+    color: #0F766E !important;
+}
+
+/* Navigation Links — Solid Color (Dark Mode) */
+.navbar-nav .nav-item-colored,
+.navbar-nav .nav-link.nav-item-colored {
+    color: #8B5CF6 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.45rem 0.95rem !important;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+}
+
+.navbar-nav .nav-item-colored:hover {
+    color: #A78BFA !important;
+    background-color: rgba(139, 92, 246, 0.12);
+}
+
+.navbar-nav .nav-item-colored.active {
+    color: #FFFFFF !important;
+    background-color: #8B5CF6 !important;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+/* Navigation Links — Green in Light Mode (Matching Hero) */
+html.light-mode .navbar-nav .nav-item-colored,
+html.light-mode .navbar-nav .nav-link.nav-item-colored {
+    color: #0D9488 !important;
+}
+
+html.light-mode .navbar-nav .nav-item-colored:hover {
+    color: #0F766E !important;
+    background-color: rgba(13, 148, 136, 0.1);
+}
+
+html.light-mode .navbar-nav .nav-item-colored.active {
+    color: #FFFFFF !important;
+    background-color: #0D9488 !important;
+    box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+}
+
+/* Nav Logout link */
+.nav-item-colored.nav-logout {
+    cursor: pointer;
+}
+
+/* Navbar toggler for mobile */
+.custom-navbar-toggler {
+    border: 1.5px solid #8B5CF6 !important;
+    border-radius: 8px;
+    padding: 0.35rem 0.65rem;
+}
+
+.custom-navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+}
+
+.custom-navbar-toggler .navbar-toggler-icon {
+    filter: invert(45%) sepia(85%) saturate(2200%) hue-rotate(240deg);
+}
+
+html.light-mode .custom-navbar-toggler {
+    border-color: #0D9488 !important;
+}
+
+html.light-mode .custom-navbar-toggler .navbar-toggler-icon {
+    filter: invert(42%) sepia(85%) saturate(700%) hue-rotate(130deg);
 }
 
 .hero-content {
@@ -257,11 +355,7 @@ html.light-mode .text-white {
     color: #FFFFFF !important;
 }
 
-/* Light mode — Navbar stays branded but with teal */
-
-html.light-mode .action-button.p-4 {
-    background-color: #0D9488;
-}
+/* Light mode — Navbar styling handled in .app-navbar */
 
 /* Light mode — Bootstrap nav-tabs */
 
@@ -325,7 +419,8 @@ html.light-mode .spinner-border {
 
 .theme-toggle-nav {
     background: none;
-    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border: 1.5px solid rgba(167, 139, 250, 0.4);
+    color: #A78BFA;
     border-radius: 10px;
     width: 38px;
     height: 38px;
@@ -335,7 +430,7 @@ html.light-mode .spinner-border {
     justify-content: center;
     padding: 0;
     margin-left: 12px;
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .theme-toggle-nav svg {
@@ -343,8 +438,9 @@ html.light-mode .spinner-border {
 }
 
 .theme-toggle-nav:hover {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: #A78BFA;
+    background: rgba(167, 139, 250, 0.15);
+    color: #C4B5FD;
 }
 
 .theme-toggle-nav:hover svg {
@@ -833,34 +929,18 @@ html.light-mode footer.action-button small {
     color: #FFFFFF;
 }
 
-/* Navbar brand text — ensure white on teal */
-html.light-mode .navbar-brand {
-    color: #FFFFFF !important;
-}
+/* Navbar brand and link text in light mode are styled in .app-navbar */
 
-/* Navbar link text in light mode — ensure white on teal */
-html.light-mode .navbar-nav .nav-link {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-html.light-mode .navbar-nav .nav-link:hover,
-html.light-mode .navbar-nav .nav-link:focus {
-    color: #FFFFFF;
-}
-
-html.light-mode .navbar-nav .nav-link.active {
-    color: #FFFFFF;
-}
-
-/* Theme toggle in light mode — white border on teal bg */
+/* Theme toggle in light mode — green border and icon (matching hero) */
 html.light-mode .theme-toggle-nav {
-    border-color: rgba(255, 255, 255, 0.3);
-    color: #FFFFFF;
+    border-color: rgba(13, 148, 136, 0.4);
+    color: #0D9488;
 }
 
 html.light-mode .theme-toggle-nav:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.12);
+    border-color: #0D9488;
+    background: rgba(13, 148, 136, 0.12);
+    color: #0F766E;
 }
 
 /* Code structure graph node labels — adapt for light mode */
@@ -892,21 +972,7 @@ html.light-mode .action-button[disabled] {
 
 /* ===== Light Mode — Navbar auth links (Login & Register / Create Account) ===== */
 
-html.light-mode .nav-auth-link,
-html.light-mode .nav-auth-link:hover,
-html.light-mode .nav-auth-link:focus,
-html.light-mode .nav-auth-link:active,
-html.light-mode .nav-auth-link.active,
-html.light-mode .navbar-nav .nav-auth-link,
-html.light-mode .navbar-nav .nav-auth-link:hover,
-html.light-mode .navbar-nav .nav-auth-link:focus,
-html.light-mode .navbar-nav .nav-auth-link:active,
-html.light-mode .navbar-nav .nav-auth-link.active {
-    box-shadow: none !important;
-    border: none !important;
-    outline: none !important;
-    color: #FFFFFF !important;
-}
+/* Navbar auth links handled in .nav-item-colored */
 
 /* ===== Responsive & Adaptive Layout Enhancements ===== */
 
@@ -1242,4 +1308,336 @@ html, body {
     .badge.fs-5 {
         font-size: 1rem !important;
     }
+}
+
+/* ===== Code Editor & Snippet Display Enhancements ===== */
+
+/* Code Upload Textarea — Clean dark in dark mode, crystal-clear dark text in light mode */
+textarea#code,
+.code-editor-textarea {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    background-color: #181B26 !important;
+    color: #F3F4F6 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+textarea#code:focus,
+.code-editor-textarea:focus {
+    background-color: #141720 !important;
+    color: #FFFFFF !important;
+    border-color: #8B5CF6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25) !important;
+}
+
+html.light-mode textarea#code,
+html.light-mode .code-editor-textarea {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border: 1.5px solid rgba(13, 148, 136, 0.25) !important;
+}
+
+html.light-mode textarea#code:focus,
+html.light-mode .code-editor-textarea:focus {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border-color: #0D9488 !important;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2) !important;
+}
+
+html.light-mode textarea#code::placeholder {
+    color: #94A3B8 !important;
+}
+
+/* Code Snippet Block (SnippetDetails page) */
+.code-snippet-block {
+    background-color: #0F1117 !important;
+    color: #F3F4F6 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+html.light-mode .code-snippet-block {
+    background-color: #1E2235 !important;
+    color: #F8FAFC !important;
+    border: 1px solid rgba(13, 148, 136, 0.25);
+    box-shadow: 0 4px 20px rgba(23, 27, 46, 0.08);
+}
+
+/* Ensure code line numbers stay visible and legible */
+.code-snippet-block .text-secondary {
+    color: #64748B !important;
+}
+
+html.light-mode .code-snippet-block .text-secondary {
+    color: #94A3B8 !important;
+}
+
+/* Form inputs readability in light mode */
+html.light-mode .form-control,
+html.light-mode .form-select {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+}
+
+/* ===== VS Code Style Editor Window & Syntax Theme ===== */
+.vscode-window {
+    background-color: #1E1E1E !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+html.light-mode .vscode-window {
+    border-color: rgba(13, 148, 136, 0.25) !important;
+    box-shadow: 0 8px 30px rgba(23, 27, 46, 0.1);
+}
+
+.vscode-header {
+    background-color: #252526 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vscode-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.vscode-dot-red { background-color: #FF5F56; }
+.vscode-dot-yellow { background-color: #FFBD2E; }
+.vscode-dot-green { background-color: #27C93F; }
+
+.vscode-tab {
+    background-color: #1E1E1E;
+    color: #CCCCCC;
+    font-size: 0.82rem;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    padding: 3px 12px;
+    border-radius: 5px 5px 0 0;
+    border-top: 1px solid #8B5CF6;
+}
+
+html.light-mode .vscode-tab {
+    border-top-color: #0D9488;
+}
+
+.vscode-code-body {
+    background-color: #1E1E1E !important;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.94rem;
+    line-height: 1.6;
+}
+
+.vscode-code-line {
+    padding: 1px 4px;
+    transition: background-color 0.15s ease;
+}
+
+.vscode-code-line:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.vscode-line-num {
+    color: #858585 !important;
+    font-weight: 500;
+    min-width: 2.2rem;
+    text-align: right;
+}
+
+.vscode-code-text {
+    flex: 1;
+    white-space: pre;
+}
+
+/* ===== Interactive Dashboard Enhancements ===== */
+
+@keyframes dash-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.dash-spin {
+    animation: dash-rotate 0.8s linear infinite;
+}
+
+.dash-stat-interactive {
+    cursor: pointer;
+    outline: none;
+}
+
+.dash-stat-interactive.dash-stat-active {
+    border-color: #8B5CF6;
+    box-shadow: 0 6px 24px rgba(139, 92, 246, 0.22);
+}
+
+html.light-mode .dash-stat-interactive.dash-stat-active {
+    border-color: #0D9488;
+    box-shadow: 0 6px 24px rgba(13, 148, 136, 0.16);
+}
+
+.dash-stat-hint {
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    opacity: 0.8;
+}
+
+html.light-mode .dash-stat-hint {
+    color: #64698B;
+}
+
+.dash-progress-track {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+html.light-mode .dash-progress-track {
+    background-color: rgba(23, 27, 46, 0.08);
+}
+
+.dash-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.45s ease;
+}
+
+.dash-filter-pill {
+    background: transparent;
+    color: #9CA3AF;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 0.22rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dash-filter-pill:hover {
+    color: #E5E7EB;
+    border-color: rgba(139, 92, 246, 0.45);
+}
+
+.dash-filter-pill.active {
+    background-color: #8B5CF6;
+    border-color: #8B5CF6;
+    color: #FFFFFF;
+}
+
+html.light-mode .dash-filter-pill {
+    color: #64698B;
+    border-color: rgba(23, 27, 46, 0.12);
+}
+
+html.light-mode .dash-filter-pill:hover {
+    color: #0D9488;
+    border-color: rgba(13, 148, 136, 0.4);
+}
+
+html.light-mode .dash-filter-pill.active {
+    background-color: #0D9488;
+    border-color: #0D9488;
+    color: #FFFFFF;
+}
+
+.dash-snippet-row {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.dash-snippet-row:hover {
+    background-color: rgba(139, 92, 246, 0.08);
+    border-color: rgba(139, 92, 246, 0.35);
+    transform: translateX(3px);
+}
+
+html.light-mode .dash-snippet-row {
+    background-color: #F8FAFC;
+    border-color: rgba(23, 27, 46, 0.08);
+}
+
+html.light-mode .dash-snippet-row:hover {
+    background-color: rgba(13, 148, 136, 0.06);
+    border-color: rgba(13, 148, 136, 0.35);
+}
+
+.dash-snippet-title {
+    color: #E5E7EB;
+    max-width: 240px;
+}
+
+html.light-mode .dash-snippet-title {
+    color: #171B2E;
+}
+
+.dash-lang-pill {
+    background-color: rgba(139, 92, 246, 0.18);
+    color: #C4B5FD;
+    font-size: 0.7rem;
+}
+
+html.light-mode .dash-lang-pill {
+    background-color: rgba(13, 148, 136, 0.12);
+    color: #0F766E;
+}
+
+.dash-lang-bar-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: #E5E7EB;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dash-lang-bar-btn:hover,
+.dash-lang-bar-btn.active {
+    border-color: #8B5CF6;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+html.light-mode .dash-lang-bar-btn {
+    background: #F8FAFC;
+    border-color: rgba(23, 27, 46, 0.08);
+    color: #171B2E;
+}
+
+html.light-mode .dash-lang-bar-btn:hover,
+html.light-mode .dash-lang-bar-btn.active {
+    border-color: #0D9488;
+    background: rgba(13, 148, 136, 0.08);
+}
+
+.dash-mini-metric {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 10px 6px;
+}
+
+html.light-mode .dash-mini-metric {
+    background-color: #F8FAFC;
+    border-color: rgba(23, 27, 46, 0.08);
+}
+
+.dash-quick-drawer {
+    animation: fadeInUp 0.25s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
 }

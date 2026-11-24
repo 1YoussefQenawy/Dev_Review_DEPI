@@ -41,8 +41,8 @@ export function loadAiConfig(env: Env = process.env): AiConfig {
     geminiApiKey: env.GEMINI_API_KEY?.trim() || undefined,
     geminiModel: env.GEMINI_MODEL?.trim() || undefined,
     geminiBaseUrl: 'https://generativelanguage.googleapis.com/v1beta',
-    timeoutMs: intFromEnv(env, 'AI_TIMEOUT_MS', 30_000, 1_000, 120_000),
-    maxInputChars: intFromEnv(env, 'AI_MAX_INPUT_CHARS', 20_000, 100, 200_000),
+    timeoutMs: intFromEnv(env, 'AI_TIMEOUT_MS', 300_000, 1_000, 600_000),
+    maxInputChars: intFromEnv(env, 'AI_MAX_INPUT_CHARS', 100_000, 100, 500_000),
     maxRepairAttempts: intFromEnv(env, 'AI_MAX_REPAIR_ATTEMPTS', 0, 0, 1),
     quotaCooldownMs: intFromEnv(env, 'AI_QUOTA_COOLDOWN_MS', 300_000, 0, 86_400_000),
   };

@@ -41,9 +41,9 @@ export default function Login() {
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Email</label>
+                  <label htmlFor="email" className="form-label">Email or Username</label>
                   <input
-                    type="email"
+                    type="text"
                     id="email"
                     className="form-control"
                     value={email}

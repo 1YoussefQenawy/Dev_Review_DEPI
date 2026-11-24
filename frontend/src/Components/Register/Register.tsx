@@ -3,6 +3,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import { ApiError } from "../../services/api";
 
+interface PasswordRule {
+  label: string;
+  missingText: string;
+  test: (pw: string) => boolean;
+}
+
+const PASSWORD_RULES: PasswordRule[] = [
+  { label: "Uppercase (A-Z)", missingText: "uppercase letter (A-Z)", test: (pw) => /[A-Z]/.test(pw) },
+  { label: "Lowercase (a-z)", missingText: "lowercase letter (a-z)", test: (pw) => /[a-z]/.test(pw) },
+  { label: "Number (0-9)", missingText: "number (0-9)", test: (pw) => /[0-9]/.test(pw) },
+  { label: "Special char (!@#$...)", missingText: "special character (e.g. !@#$%)", test: (pw) => /[^A-Za-z0-9\s]/.test(pw) },
+];
+
+function getPasswordError(password: string): string | null {
+  const missing = PASSWORD_RULES.filter((rule) => !rule.test(password)).map((r) => r.missingText);
+  if (missing.length === 0) return null;
+  return `Password must contain uppercase letters, lowercase letters, numbers, and special characters. Missing: ${missing.join(", ")}.`;
+}
+
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -18,10 +37,12 @@ export default function Register() {
     e.preventDefault();
     setError("");
 
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+    const passwordError = getPasswordError(password);
+    if (passwordError) {
+      setError(passwordError);
       return;
     }
+
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -46,7 +67,7 @@ export default function Register() {
             <div className="auth-card cards-sidebar p-4 rounded-3">
               <h1 className="fw-bold h3 text-center mb-4">Register</h1>
 
-              {error && <div className="alert alert-danger py-2" role="alert">{error}</div>}
+              {error && <div className="alert alert-danger py-2 small" role="alert">{error}</div>}
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -62,9 +83,9 @@ export default function Register() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Email</label>
+                  <label htmlFor="email" className="form-label">Email or Username</label>
                   <input
-                    type="email"
+                    type="text"
                     id="email"
                     className="form-control"
                     value={email}
@@ -83,6 +104,20 @@ export default function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                  <div className="d-flex flex-wrap gap-2 mt-2">
+                    {PASSWORD_RULES.map((rule) => {
+                      const passed = password.length > 0 && rule.test(password);
+                      return (
+                        <small
+                          key={rule.label}
+                          className={passed ? "text-success fw-semibold" : "text-secondary"}
+                          style={{ fontSize: "0.75rem" }}
+                        >
+                          {passed ? "✓" : "•"} {rule.label}
+                        </small>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div className="mb-3">
